@@ -1,4 +1,5 @@
 import pyautogui
+from pynput import keyboard
 from AppKit import NSWorkspace
 from Cocoa import NSRunningApplication, NSApplicationActivateIgnoringOtherApps
 
@@ -100,13 +101,62 @@ def aiMind():
             rest()
         else:
             searchTarget()
-
-#机器人大脑
-while True:
-    if isWowForeground():
-        aiMind()
-    else:
-        print("游戏未开始")
+        
+        
+def aiMind1():
+    global xx
+    xx = False
+    global position
+    x,y= pyautogui.position()
     
-    #每次执行动作完都停顿一下
-    pyautogui.sleep(0.3)
+    pyautogui.click(x=942, y=86)
+    pyautogui.press('8')
+    pyautogui.click(x=x, y=y)
+    
+    
+    
+    
+    print(pyautogui.position(),'true',pyautogui.size())
+    print(xx,'true',pyautogui.size())
+    
+    
+
+# #机器人大脑
+# while True:
+#     if isWowForeground():
+#         aiMind()
+#     else:
+#         print("游戏未开始")8888
+    
+#     #每次执行动作完都停顿一下
+#     pyautogui.sleep(0.3)
+    
+# aiMind1()
+    
+def on_press(key):
+    try:
+        print('alphanumeric key {0} pressed'.format(
+            key.char))
+    except AttributeError:
+        print('special key {0} pressed'.format(
+            key))
+
+def on_release(key):
+    print(key.char)
+    if key.char == '2':
+        aiMind1()
+    if key == keyboard.Key.esc:
+        # Stop listener
+        return False
+    
+with keyboard.Listener(
+        on_press=on_press,
+        on_release=on_release) as listener:
+    listener.join()
+    
+# while True:
+    # aiMind1()
+    # pyautogui.sleep(3)
+
+
+
